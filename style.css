@@ -31,6 +31,12 @@ select {
   margin-right: 10px;
 }
 .screen {
+  background-color: rgba(211, 211, 211, 0.582);
+  background: linear-gradient(
+    180deg,
+    rgb(179, 179, 179) 0%,
+    rgba(255, 255, 255, 0.61) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +47,7 @@ select {
 .container {
   border: solid 1px black;
   background-color: rgb(200, 209, 219);
+
   height: 90%;
   width: 90%;
   display: flex;
