@@ -1,54 +1,72 @@
-$(function () {
-  let arr = [];
+const btnFill = document.querySelector("#btnFill");
+const btnSort = document.querySelector("#btnSort");
+const btnClear = document.querySelector("#btnClear");
+const container = document.querySelector(".container");
 
-  $("#btnFill").click(function () {
-    arr = fill();
-    draw(arr);
-  });
+let animating = false;
+let timer;
+let arr = [];
 
-  $("#btnSort").click(function () {
-    let sorted = mergeSort();
-    let i = 0;
-    let inter = setInterval(function () {
-      if (i == sorted.length - 1) clearInterval(inter);
-      draw(sorted[i]);
-      i++;
-    }, 10);
-    console.log("Done!");
-  });
+btnFill.addEventListener("click", function () {
+  arr = fillArray();
+  draw(arr);
+});
 
-  function mergeSort() {
-    let snapShots = [];
-    for (let i = 1; i < arr.length; i++) {
-      let current = i;
-      while (arr[current] < arr[current - 1]) {
-        // console.log(arr[current] + "<" + arr[current - 1]);
-        let tmp = arr[current - 1];
-        arr[current - 1] = arr[current];
-        arr[current] = tmp;
-        snapShots.push([...arr]);
-        current--;
+btnClear.addEventListener("click", function () {
+  clearInterval(timer);
+  container.innerHTML = "";
+  animating = false;
+  arr = [];
+});
+
+btnSort.addEventListener("click", function () {
+  if (animating || !arr.length) {
+    return;
+  }
+  animating = true;
+  let sorted = bubbleSort();
+  let index = 0;
+  timer = setInterval(function () {
+    draw(sorted[index]);
+    index++;
+    if (index == sorted.length) {
+      animating = false;
+      clearInterval(timer);
+    }
+  }, 20);
+});
+
+function bubbleSort() {
+  let snapShots = [];
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      arr[j].col = "blue";
+      if (arr[j].val > arr[j + 1].val) {
+        let tmp = arr[j].val;
+        arr[j].val = arr[j + 1].val;
+        arr[j + 1].val = tmp;
+        snapShots.push(JSON.parse(JSON.stringify([...arr])));
       }
     }
-    console.log(snapShots);
-    return snapShots;
   }
+  return snapShots;
+}
 
-  function fill() {
-    const range = 100;
-    const length = 40;
-    const tmp = [];
-    for (let i = 0; i < length; i++)
-      tmp[i] = Math.floor(Math.random() * range + 1);
-    return tmp;
+function fillArray() {
+  const tmp = [];
+  const len = 100;
+  for (let i = 0; i < len; i++) {
+    tmp[i] = { val: Math.floor(Math.random() * 100 + 1), col: "red" };
   }
+  return tmp;
+}
 
-  function draw(arr) {
-    $(".container").empty();
-    for (let i = 0; i < arr.length; i++) {
-      const tmp = $('<div class="bar"></div>');
-      tmp.css("height", arr[i] + "%");
-      $(".container").append(tmp);
-    }
+function draw(array) {
+  container.innerHTML = "";
+  for (let i = 0; i < array.length; i++) {
+    const tmp = document.createElement("div");
+    tmp.style.height = array[i].val + "%";
+    tmp.classList.add("bar", array[i].col);
+    container.appendChild(tmp);
   }
-});
+}
