@@ -3,6 +3,7 @@ const btnSort = document.querySelector("#btnSort");
 const btnClear = document.querySelector("#btnClear");
 const container = document.querySelector(".container");
 const select = document.querySelector("#select");
+const speed = document.querySelector("#speed");
 
 let timer;
 let arr = [];
@@ -22,7 +23,6 @@ btnClear.addEventListener("click", function () {
   btnClear.disabled = true;
   clearInterval(timer);
   container.innerHTML = "";
-
   arr = [];
 });
 
@@ -30,8 +30,12 @@ btnSort.addEventListener("click", function () {
   btnFill.disabled = true;
   btnSort.disabled = true;
   let sorted;
-  if ((select.value = "bubble")) {
+  const algo = select.value;
+  console.log(select.value);
+  if (algo == "bubble") {
     sorted = bubbleSort();
+  } else if (algo == "insertion") {
+    sorted = insertionSort();
   }
 
   let index = 0;
@@ -42,10 +46,27 @@ btnSort.addEventListener("click", function () {
       animating = false;
       clearInterval(timer);
     }
-  }, 50);
+  }, speed.value);
 });
 
+function insertionSort() {
+  let snapShots = [];
+  console.log("Insertion");
+  for (let i = 1; i < arr.length; i++) {
+    let j = i;
+    while (j > 0 && arr[j - 1].val > arr[j].val) {
+      let tmp = arr[j - 1].val;
+      arr[j - 1].val = arr[j].val;
+      arr[j].val = tmp;
+      j--;
+      snapShots.push(JSON.parse(JSON.stringify([...arr])));
+    }
+  }
+  return snapShots;
+}
+
 function bubbleSort() {
+  console.log("Bubble");
   let snapShots = [];
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - 1 - i; j++) {
