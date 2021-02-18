@@ -1,7 +1,7 @@
 const btnFill = document.querySelector("#btnFill");
 const btnSort = document.querySelector("#btnSort");
 const btnClear = document.querySelector("#btnClear");
-const container = document.querySelector(".container");
+const container = document.querySelector(".arrayContainer");
 const select = document.querySelector("#select");
 const speed = document.querySelector("#speed");
 
@@ -27,6 +27,7 @@ btnClear.addEventListener("click", function () {
 });
 
 btnSort.addEventListener("click", function () {
+  console.log("sdadas");
   btnFill.disabled = true;
   btnSort.disabled = true;
   let sorted;
@@ -51,43 +52,62 @@ btnSort.addEventListener("click", function () {
 
 function insertionSort() {
   let snapShots = [];
-  console.log("Insertion");
   for (let i = 1; i < arr.length; i++) {
     let j = i;
+
     while (j > 0 && arr[j - 1].val > arr[j].val) {
+      paintInsertion(i);
+      arr[j].col = "green";
+      arr[j - 1].col = "blue";
+      snap(snapShots);
       let tmp = arr[j - 1].val;
       arr[j - 1].val = arr[j].val;
       arr[j].val = tmp;
+      arr[j].col = "blue";
+      arr[j - 1].col = "green";
       j--;
-      snapShots.push(JSON.parse(JSON.stringify([...arr])));
+      snap(snapShots);
     }
   }
+
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].col = "teal";
+  }
+  snap(snapShots);
   return snapShots;
 }
 
+function paintInsertion(s) {
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].col = "red";
+  }
+  for (let i = 0; i < s; i++) {
+    arr[i].col = "teal";
+  }
+}
+
 function bubbleSort() {
-  console.log("Bubble");
   let snapShots = [];
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - 1 - i; j++) {
       paintBubble(arr.length - i);
       arr[j + 1].col = "blue";
       arr[j].col = "green";
-      snapShots.push(JSON.parse(JSON.stringify([...arr])));
+      snap(snapShots);
       if (arr[j].val > arr[j + 1].val) {
         let tmp = arr[j].val;
         arr[j].val = arr[j + 1].val;
         arr[j + 1].val = tmp;
         arr[j + 1].col = "green";
         arr[j].col = "blue";
-        snapShots.push(JSON.parse(JSON.stringify([...arr])));
+        snap(snapShots);
       }
     }
   }
   for (let i = 0; i < arr.length; i++) {
     arr[i].col = "teal";
   }
-  snapShots.push(JSON.parse(JSON.stringify([...arr])));
+  snap(snapShots);
   return snapShots;
 }
 
@@ -99,6 +119,17 @@ function paintBubble(s) {
     arr[i].col = "red";
   }
 }
+
+/*
+When writing an algorithm function, keep in mind:
+-snap(param) will write a snapshot of arr to param.
+use it to add a frame to the "film" (snapShots)
+-use snap() every time there is a color change!
+*/
+function snap(target) {
+  target.push(JSON.parse(JSON.stringify([...arr])));
+}
+
 function fillArray() {
   const tmp = [];
   const len = 50;

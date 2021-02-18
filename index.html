@@ -5,33 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
     <div class="menu">
-      <button id="btnFill">Randomize array</button>
+      <button class="btn btn-primary" id="btnFill">Randomize array</button>
       <div class="algo">
-        <select name="" id="select">
+        <label for="algo">Algorithm:</label>
+        <select class="form-select" name="algo" id="select">
           <option value="bubble">Bubble sort</option>
           <option value="insertion">Insertion sort</option>
         </select>
-        <select name="" id="speed">
+        <label for="speed">Speed:</label>
+        <select class="form-select" name="speed" id="speed">
           <option value="5">Very fast</option>
           <option value="25">Fast</option>
           <option value="50" selected>Medium</option>
           <option value="100">Slow</option>
           <option value="500">Very slow</option>
         </select>
-        <button id="btnSort">Visualize</button>
+        <button class="btn btn-success" id="btnSort">Visualize</button>
       </div>
 
-      <button id="btnClear">Clear</button>
+      <button class="btn btn-warning" id="btnClear">Clear</button>
     </div>
     <div class="screen">
-      <div class="container">
-        <div class="bar"></div>
-      </div>
+      <div class="arrayContainer"></div>
     </div>
+    <div class="footer">Sorting algorithm visualizer by Amit Fisher</div>
   </body>
 </html>
