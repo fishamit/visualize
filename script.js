@@ -13,7 +13,7 @@ $(function () {
       if (i == sorted.length - 1) clearInterval(inter);
       draw(sorted[i]);
       i++;
-    }, 5);
+    }, 10);
     console.log("Done!");
   });
 
@@ -36,7 +36,7 @@ $(function () {
 
   function fill() {
     const range = 100;
-    const length = 100;
+    const length = 40;
     const tmp = [];
     for (let i = 0; i < length; i++)
       tmp[i] = Math.floor(Math.random() * range + 1);
