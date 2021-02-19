@@ -208,15 +208,18 @@ function draw(array) {
   for (let i = 0; i < array.length; i++) {
     const tmp = document.createElement("div");
     const grd = document.createElement("div");
+    const vgrd = document.createElement("div");
     const num = document.createElement("span");
     tmp.style.height = array[i].val + "%";
     tmp.style.width = 100 / arr.length + "%";
     tmp.classList.add("bar", array[i].col);
     grd.classList.add("grd");
+    vgrd.classList.add("vgrd");
     num.classList.add("num");
     num.textContent = array[i].val;
     tmp.appendChild(grd);
-    grd.appendChild(num);
+    grd.appendChild(vgrd);
+    vgrd.appendChild(num);
     container.appendChild(tmp);
   }
 }
