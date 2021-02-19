@@ -43,7 +43,11 @@ btnSort.addEventListener("click", function () {
   } else if (algo == "selection") {
     arrSorted = selectionSort();
   }
-
+  console.log(
+    `Total iterations: ${arrSorted.length}\nTotal snapshopts: ${
+      arrSorted.length * arrsize.value
+    }`
+  );
   let index = 0;
   timer = setInterval(function () {
     draw(arrSorted[index]);
