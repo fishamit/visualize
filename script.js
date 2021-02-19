@@ -57,59 +57,68 @@ btnSort.addEventListener("click", function () {
 });
 
 function selectionSort() {
-  let snapShopts = [];
+  let snapShots = [];
 
   for (let i = 0; i < arr.length - 1; i++) {
     paintInsertion(i);
-    arr[i].col = "green";
-    snap(snapShopts);
+
     let minimum = i;
     for (let j = i + 1; j < arr.length; j++) {
+      paintInsertion(i);
+      arr[i].col = "select";
+      arr[j].col = "select";
+      snap(snapShots);
       if (arr[j].val < arr[minimum].val) {
+        arr[j].col = "different";
+        snap(snapShots);
         minimum = j;
       }
     }
     if (minimum != i) {
-      arr[minimum].col = "blue";
-      snap(snapShopts);
+      arr[minimum].col = "different";
+      arr[i].col = "different";
+      snap(snapShots);
       let tmp = arr[i].val;
       arr[i].val = arr[minimum].val;
       arr[minimum].val = tmp;
-      arr[i].col = "blue";
-      arr[minimum].col = "green";
-      snap(snapShopts);
+      snap(snapShots);
+      arr[i].col = "select";
+      arr[minimum].col = "select";
+      snap(snapShots);
     }
   }
   for (let i = 0; i < arr.length; i++) {
-    arr[i].col = "teal";
+    arr[i].col = "sorted";
   }
-  snap(snapShopts);
-  return snapShopts;
+  snap(snapShots);
+  return snapShots;
 }
 
 function insertionSort() {
   let snapShots = [];
   for (let i = 1; i < arr.length; i++) {
     let j = i;
-
     while (j > 0 && arr[j - 1].val > arr[j].val) {
       paintInsertion(i);
-      arr[j].col = "green";
+      arr[j].col = "select";
+      arr[j - 1].col = "select";
       snap(snapShots);
-      arr[j - 1].col = "blue";
+      arr[j].col = "different";
+      arr[j - 1].col = "different";
       snap(snapShots);
       let tmp = arr[j - 1].val;
       arr[j - 1].val = arr[j].val;
       arr[j].val = tmp;
-      arr[j].col = "blue";
-      arr[j - 1].col = "green";
-      j--;
       snap(snapShots);
+      arr[j].col = "select";
+      arr[j - 1].col = "select";
+      snap(snapShots);
+      j--;
     }
   }
 
   for (let i = 0; i < arr.length; i++) {
-    arr[i].col = "teal";
+    arr[i].col = "sorted";
   }
   snap(snapShots);
   return snapShots;
@@ -117,35 +126,45 @@ function insertionSort() {
 
 function paintInsertion(s) {
   for (let i = 0; i < arr.length; i++) {
-    arr[i].col = "red";
+    arr[i].col = "normal";
   }
   for (let i = 0; i < s; i++) {
-    arr[i].col = "teal";
+    arr[i].col = "sorted";
   }
 }
 
+/*
+Snapshot for comparison
+Switch color for test
+Snapshop for difference
+SWAP
+Snapshot for replace
+*/
 function bubbleSort() {
   let snapShots = [];
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - 1 - i; j++) {
       paintBubble(arr.length - i);
-      arr[j + 1].col = "blue";
-      snap(snapShots);
-      arr[j].col = "green";
+      arr[j + 1].col = "select";
+      arr[j].col = "select";
       snap(snapShots);
 
       if (arr[j].val > arr[j + 1].val) {
+        arr[j + 1].col = "different";
+        arr[j].col = "different";
+        snap(snapShots);
         let tmp = arr[j].val;
         arr[j].val = arr[j + 1].val;
         arr[j + 1].val = tmp;
-        arr[j + 1].col = "green";
-        arr[j].col = "blue";
+        snap(snapShots);
+        arr[j + 1].col = "select";
+        arr[j].col = "select";
         snap(snapShots);
       }
     }
   }
   for (let i = 0; i < arr.length; i++) {
-    arr[i].col = "teal";
+    arr[i].col = "sorted";
   }
   snap(snapShots);
   return snapShots;
@@ -153,10 +172,10 @@ function bubbleSort() {
 
 function paintBubble(s) {
   for (let i = 0; i < arr.length; i++) {
-    arr[i].col = "teal";
+    arr[i].col = "sorted";
   }
   for (let i = 0; i < s; i++) {
-    arr[i].col = "red";
+    arr[i].col = "normal";
   }
 }
 
@@ -174,7 +193,7 @@ function fillArray() {
   const tmp = [];
   const len = 50;
   for (let i = 0; i < len; i++) {
-    tmp[i] = { val: Math.floor(Math.random() * 100 + 1), col: "red" };
+    tmp[i] = { val: Math.floor(Math.random() * 100 + 1), col: "normal" };
   }
   return tmp;
 }

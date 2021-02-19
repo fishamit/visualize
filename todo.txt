@@ -1,0 +1,11 @@
+- implement array size in js
+
+bubble sort V
+insertion sort V
+selection sort V
+quicksort 
+merge sort
+heap sort
+counting sort
+radix sort
+bucket sort

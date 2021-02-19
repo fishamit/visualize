@@ -16,7 +16,16 @@
   </head>
   <body>
     <div class="menu">
-      <button class="btn btn-primary" id="btnFill">Randomize array</button>
+      <div class="array">
+        <label for="algo">Array size:</label>
+        <select class="form-select" name="arraysize" id="arraysize">
+          <option value="small">Small</option>
+          <option value="medium" selected>Medium</option>
+          <option value="big">Big</option>
+        </select>
+        <button class="btn btn-primary" id="btnFill">Randomize array</button>
+      </div>
+
       <div class="algo">
         <label for="algo">Algorithm:</label>
         <select class="form-select" name="algo" id="select">
