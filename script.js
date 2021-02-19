@@ -79,6 +79,7 @@ function selectionSort() {
         minimum = j;
       }
     }
+    paintInsertion(i);
     if (minimum != i) {
       arr[minimum].col = "different";
       arr[i].col = "different";
@@ -138,13 +139,6 @@ function paintInsertion(s) {
   }
 }
 
-/*
-Snapshot for comparison
-Switch color for test
-Snapshop for difference
-SWAP
-Snapshot for replace
-*/
 function bubbleSort() {
   let snapShots = [];
   for (let i = 0; i < arr.length - 1; i++) {
@@ -189,6 +183,13 @@ When writing an algorithm function, keep in mind:
 -snap(param) will write a snapshot of arr to param.
 use it to add a frame to the "film" (snapShots)
 -use snap() every time there is a color change!
+*/
+/*
+Snapshot for comparison
+Switch color for test
+Snapshop for difference
+SWAP
+Snapshot for replace
 */
 function snap(target) {
   target.push(JSON.parse(JSON.stringify([...arr])));
