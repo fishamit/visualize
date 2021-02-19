@@ -32,22 +32,22 @@ btnClear.addEventListener("click", function () {
 btnSort.addEventListener("click", function () {
   animating = true;
   manageButtons();
-  let sorted;
+  let arrSorted;
   const algo = select.value;
   console.log(select.value);
   if (algo == "bubble") {
-    sorted = bubbleSort();
+    arrSorted = bubbleSort();
   } else if (algo == "insertion") {
-    sorted = insertionSort();
+    arrSorted = insertionSort();
   } else if (algo == "selection") {
-    sorted = selectionSort();
+    arrSorted = selectionSort();
   }
 
   let index = 0;
   timer = setInterval(function () {
-    draw(sorted[index]);
+    draw(arrSorted[index]);
     index++;
-    if (index == sorted.length) {
+    if (index == arrSorted.length) {
       animating = false;
       sorted = true;
       manageButtons();
@@ -75,6 +75,9 @@ function selectionSort() {
       let tmp = arr[i].val;
       arr[i].val = arr[minimum].val;
       arr[minimum].val = tmp;
+      arr[i].col = "blue";
+      arr[minimum].col = "green";
+      snap(snapShopts);
     }
   }
   for (let i = 0; i < arr.length; i++) {
@@ -180,12 +183,15 @@ function draw(array) {
   container.innerHTML = "";
   for (let i = 0; i < array.length; i++) {
     const tmp = document.createElement("div");
+    const grd = document.createElement("div");
     const num = document.createElement("span");
     tmp.style.height = array[i].val + "%";
     tmp.classList.add("bar", array[i].col);
+    grd.classList.add("grd");
     num.classList.add("num");
     num.textContent = array[i].val;
-    tmp.appendChild(num);
+    tmp.appendChild(grd);
+    grd.appendChild(num);
     container.appendChild(tmp);
   }
 }
