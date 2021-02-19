@@ -73,6 +73,11 @@ select {
 
 .bar {
   border-top-left-radius: 10px;
+  /* background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  ); */
   border-top-right-radius: 10px;
   width: 3%;
   box-shadow: inset 0px 0px 6px rgb(0, 0, 0, 0.2);

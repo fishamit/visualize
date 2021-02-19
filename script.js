@@ -4,32 +4,34 @@ const btnClear = document.querySelector("#btnClear");
 const container = document.querySelector(".arrayContainer");
 const select = document.querySelector("#select");
 const speed = document.querySelector("#speed");
+const menu = document.querySelector(".menu");
 
 let timer;
 let arr = [];
-btnClear.disabled = true;
-btnSort.disabled = true;
+let animating = false;
+let sorted = false;
 
 btnFill.addEventListener("click", function () {
-  btnClear.disabled = false;
-  btnSort.disabled = false;
   arr = fillArray();
+  sorted = false;
+
   draw(arr);
+  manageButtons();
 });
 
 btnClear.addEventListener("click", function () {
-  btnFill.disabled = false;
-  btnSort.disabled = true;
-  btnClear.disabled = true;
+  animating = false;
+  sorted = false;
+
   clearInterval(timer);
   container.innerHTML = "";
   arr = [];
+  manageButtons();
 });
 
 btnSort.addEventListener("click", function () {
-  console.log("sdadas");
-  btnFill.disabled = true;
-  btnSort.disabled = true;
+  animating = true;
+  manageButtons();
   let sorted;
   const algo = select.value;
   console.log(select.value);
@@ -37,6 +39,8 @@ btnSort.addEventListener("click", function () {
     sorted = bubbleSort();
   } else if (algo == "insertion") {
     sorted = insertionSort();
+  } else if (algo == "selection") {
+    sorted = selectionSort();
   }
 
   let index = 0;
@@ -45,10 +49,40 @@ btnSort.addEventListener("click", function () {
     index++;
     if (index == sorted.length) {
       animating = false;
+      sorted = true;
+      manageButtons();
       clearInterval(timer);
     }
   }, speed.value);
 });
+
+function selectionSort() {
+  let snapShopts = [];
+
+  for (let i = 0; i < arr.length - 1; i++) {
+    paintInsertion(i);
+    arr[i].col = "green";
+    snap(snapShopts);
+    let minimum = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j].val < arr[minimum].val) {
+        minimum = j;
+      }
+    }
+    if (minimum != i) {
+      arr[minimum].col = "blue";
+      snap(snapShopts);
+      let tmp = arr[i].val;
+      arr[i].val = arr[minimum].val;
+      arr[minimum].val = tmp;
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].col = "teal";
+  }
+  snap(snapShopts);
+  return snapShopts;
+}
 
 function insertionSort() {
   let snapShots = [];
@@ -58,6 +92,7 @@ function insertionSort() {
     while (j > 0 && arr[j - 1].val > arr[j].val) {
       paintInsertion(i);
       arr[j].col = "green";
+      snap(snapShots);
       arr[j - 1].col = "blue";
       snap(snapShots);
       let tmp = arr[j - 1].val;
@@ -92,8 +127,10 @@ function bubbleSort() {
     for (let j = 0; j < arr.length - 1 - i; j++) {
       paintBubble(arr.length - i);
       arr[j + 1].col = "blue";
+      snap(snapShots);
       arr[j].col = "green";
       snap(snapShots);
+
       if (arr[j].val > arr[j + 1].val) {
         let tmp = arr[j].val;
         arr[j].val = arr[j + 1].val;
@@ -150,5 +187,29 @@ function draw(array) {
     num.textContent = array[i].val;
     tmp.appendChild(num);
     container.appendChild(tmp);
+  }
+}
+
+function manageButtons() {
+  if (animating) {
+    btnFill.disabled = true;
+    btnSort.disabled = true;
+    btnClear.disabled = false;
+  } else {
+    if (arr.length > 0) {
+      if (sorted) {
+        btnClear.disabled = false;
+        btnFill.disabled = false;
+        btnSort.disabled = true;
+      } else {
+        btnFill.disabled = false;
+        btnSort.disabled = false;
+        btnClear.disabled = false;
+      }
+    } else {
+      btnFill.disabled = false;
+      btnSort.disabled = true;
+      btnClear.disabled = true;
+    }
   }
 }

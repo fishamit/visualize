@@ -22,6 +22,7 @@
         <select class="form-select" name="algo" id="select">
           <option value="bubble">Bubble sort</option>
           <option value="insertion">Insertion sort</option>
+          <option value="selection">Selection sort</option>
         </select>
         <label for="speed">Speed:</label>
         <select class="form-select" name="speed" id="speed">
@@ -31,10 +32,14 @@
           <option value="100">Slow</option>
           <option value="500">Very slow</option>
         </select>
-        <button class="btn btn-success" id="btnSort">Visualize</button>
+        <button class="btn btn-success" id="btnSort" disabled="true">
+          Visualize
+        </button>
       </div>
 
-      <button class="btn btn-warning" id="btnClear">Clear</button>
+      <button class="btn btn-warning" id="btnClear" disabled="true">
+        Clear
+      </button>
     </div>
     <div class="screen">
       <div class="arrayContainer"></div>
