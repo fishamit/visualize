@@ -5,6 +5,7 @@ const container = document.querySelector(".arrayContainer");
 const select = document.querySelector("#select");
 const speed = document.querySelector("#speed");
 const menu = document.querySelector(".menu");
+const arrsize = document.querySelector("#arraysize");
 
 let timer;
 let arr = [];
@@ -191,7 +192,7 @@ function snap(target) {
 
 function fillArray() {
   const tmp = [];
-  const len = 50;
+  const len = arrsize.value;
   for (let i = 0; i < len; i++) {
     tmp[i] = { val: Math.floor(Math.random() * 100 + 1), col: "normal" };
   }
@@ -205,6 +206,7 @@ function draw(array) {
     const grd = document.createElement("div");
     const num = document.createElement("span");
     tmp.style.height = array[i].val + "%";
+    tmp.style.width = 100 / arr.length + "%";
     tmp.classList.add("bar", array[i].col);
     grd.classList.add("grd");
     num.classList.add("num");
